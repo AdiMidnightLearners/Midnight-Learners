@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Mastery Quiz - Day 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex items-center justify-center p-4">
+
+<div id="app" class="w-full max-w-2xl bg-white shadow-xl rounded-3xl p-6 md:p-10">
+    <div id="landing" class="text-center">
+        <h1 class="text-4xl font-bold mb-4 text-indigo-600">DSA Day 2 Quiz</h1>
+        <p class="text-slate-500 mb-8">Test your knowledge of Traversal, Access, Update, Sum, and Average.</p>
+        <input type="text" id="username" placeholder="Enter your name" class="w-full p-4 border border-slate-200 rounded-xl mb-6 focus:ring-2 focus:ring-indigo-500 outline-none">
+        <button onclick="startQuiz()" class="w-full bg-indigo-600 text-white py-4 rounded-xl font-semibold hover:bg-indigo-700 transition">Begin Quiz</button>
+        <p id="nameError" class="text-red-500 text-sm mt-2 hidden">Please enter your name to continue.</p>
+    </div>
+
+    <div id="quiz" class="hidden">
+        <div class="flex justify-between items-center mb-6">
+            <span id="progress" class="text-xs font-semibold text-indigo-600 uppercase tracking-widest"></span>
+            <span id="userNameDisplay" class="text-xs text-slate-400 font-medium"></span>
+        </div>
+        <h2 id="question" class="text-lg font-semibold mb-6 text-slate-800"></h2>
+        <div id="options" class="space-y-2"></div>
+
+        <div class="flex justify-between mt-8">
+            <button id="prevBtn" onclick="prevQ()" class="px-6 py-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition">Previous</button>
+            <button id="nextBtn" onclick="nextQ()" class="px-6 py-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition">Next</button>
+        </div>
+        <button id="submitBtn" onclick="submitQuiz()" disabled class="w-full mt-4 py-3 bg-green-600 text-white rounded-xl font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed">Submit Quiz</button>
+    </div>
+
+    <div id="result" class="hidden text-center">
+        <h2 class="text-2xl font-bold mb-1">Quiz Complete!</h2>
+        <h3 id="reportName" class="text-sm font-medium text-slate-400 mb-4"></h3>
+        <p id="scoreDisplay" class="text-4xl font-bold text-indigo-600 mb-6"></p>
+        <div id="report" class="text-left space-y-2 text-xs"></div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        { q: "What is Traversal?", options: ["Changing values", "Visiting every element one by one", "Adding two arrays", "Deleting an array"], a: 1 },
+        { q: "Why do we use Traversal?", options: ["To delete data", "To increase memory", "To access, update, search, or calculate sum/avg", "To rename files"], a: 2 },
+        { q: "How do you access an element?", options: ["By using its index", "By using its value", "By deleting it", "By clearing it"], a: 0 },
+        { q: "How do you update an element?", options: ["arr.update(index, value)", "arr[index] = value", "arr.add(index)", "arr.replace(index)"], a: 1 },
+        { q: "What is the formula for Average?", options: ["Sum * Elements", "Sum + Elements", "Sum / Number of Elements", "Sum - Elements"], a: 2 },
+        { q: "Which is a valid way to find the sum of an array?", options: ["sum(arr)", "total(arr)", "add(arr)", "calculate(arr)"], a: 0 },
+        { q: "What is Traversal Method 2?", options: ["for i in range(len(arr)): print(arr[i])", "for x in arr: print(x)", "print(arr)", "list(arr)"], a: 1 }
+    ];
+
+    let currentQ = 0;
+    let userAnswers = new Array(questions.length).fill(null);
+    let userName = "";
+
+    function startQuiz() {
+        userName = document.getElementById('username').value;
+        if (!userName) {
+            document.getElementById('nameError').classList.remove('hidden');
+            return;
+        }
+        document.getElementById('userNameDisplay').innerText = userName;
+        document.getElementById('landing').classList.add('hidden');
+        document.getElementById('quiz').classList.remove('hidden');
+        updateButtons();
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const qData = questions[currentQ];
+        document.getElementById('progress').innerText = `Question ${currentQ + 1} of ${questions.length}`;
+        document.getElementById('question').innerText = qData.q;
+        
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = '';
+        
+        qData.options.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            const isSelected = userAnswers[currentQ] === idx;
+            btn.className = `w-full text-left p-3 rounded-lg border transition text-sm ${isSelected ? 'border-indigo-600 bg-indigo-50' : 'border-slate-100 hover:border-indigo-300 hover:bg-indigo-50'}`;
+            btn.innerText = opt;
+            btn.onclick = () => {
+                userAnswers[currentQ] = idx;
+                renderQuestion();
+            };
+            optionsDiv.appendChild(btn);
+        });
+        updateButtons();
+    }
+
+    function updateButtons() {
+        document.getElementById('prevBtn').disabled = (currentQ === 0);
+        document.getElementById('nextBtn').disabled = (currentQ === questions.length - 1);
+        
+        // Enable submit only if all questions are answered
+        const allAnswered = userAnswers.every(ans => ans !== null);
+        document.getElementById('submitBtn').disabled = !allAnswered;
+    }
+
+    function nextQ() {
+        if (currentQ < questions.length - 1) {
+            currentQ++;
+            renderQuestion();
+        }
+    }
+
+    function prevQ() {
+        if (currentQ > 0) {
+            currentQ--;
+            renderQuestion();
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        userAnswers.forEach((ans, i) => {
+            if (ans === questions[i].a) score++;
+        });
+
+        document.getElementById('quiz').classList.add('hidden');
+        document.getElementById('result').classList.remove('hidden');
+        document.getElementById('reportName').innerText = `Report for ${userName}`;
+        document.getElementById('scoreDisplay').innerText = `${score} / ${questions.length}`;
+        
+        const report = document.getElementById('report');
+        report.innerHTML = '';
+        userAnswers.forEach((ans, i) => {
+            const isCorrect = ans === questions[i].a;
+            const div = document.createElement('div');
+            div.className = `p-2 rounded-md ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`;
+            div.innerHTML = `<p class="font-semibold">${i + 1}. ${questions[i].q}</p>
+                             <p class="${isCorrect ? 'text-green-700' : 'text-red-700'}">
+                             ${isCorrect ? 'Correct!' : 'Wrong. Correct answer: ' + questions[i].options[questions[i].a]}</p>`;
+            report.appendChild(div);
+        });
+    }
+</script>
+</body>
+</html>
