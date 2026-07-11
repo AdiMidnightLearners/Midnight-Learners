@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="overflow-x-hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,47 +7,60 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
         .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
         .card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .meet-disabled { pointer-events: none; opacity: 0.5; filter: grayscale(1); }
+        .meet-enabled { pointer-events: auto; opacity: 1; filter: grayscale(0); }
     </style>
 </head>
-<body class="text-slate-900 min-h-screen">
+<body class="text-slate-900 min-h-screen w-full">
 
     <nav class="glass sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
             <div class="flex items-center gap-2 cursor-pointer" onclick="resetToHome()">
                 <div class="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-200">M</div>
                 <h1 class="text-lg font-bold tracking-tight text-slate-900">Midnight<span class="text-indigo-600">Builders</span></h1>
             </div>
             
-            <div class="flex items-center gap-2 sm:gap-6">
+            <div class="flex items-center gap-2">
                 <input id="search-input" type="text" oninput="performSearch(this.value)" placeholder="Search..." class="bg-white border border-slate-200 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-100 transition-all text-sm w-24 sm:w-64 shadow-inner">
-                <button onclick="checkAccess()" class="bg-slate-900 text-white px-4 py-2 rounded-full text-xs sm:text-sm font-semibold hover:bg-slate-800 transition-all shadow-lg active:scale-95">Add</button>
+                <button onclick="checkAccess()" class="bg-slate-900 text-white px-4 py-2 rounded-full text-xs font-semibold hover:bg-slate-800 transition-all shadow-lg active:scale-95">Add</button>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+    <main class="max-w-5xl mx-auto px-4 py-8">
         
-        <section id="performer-section" class="mb-12 sm:mb-16">
-            <div class="bg-slate-900 rounded-[2rem] p-6 sm:p-8 shadow-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                <div>
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-[10px] font-bold uppercase tracking-widest mb-3">
-                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
-                        Performer of the week
-                    </div>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Excellence in Action</h2>
-                </div>
-                <div class="text-left md:text-right border-l-4 border-indigo-500 pl-4 md:border-l-0 md:pl-0">
-                    <p class="text-slate-500 text-[10px] uppercase tracking-widest font-bold">Current Leader</p>
-                    <p class="text-3xl font-black text-white">Hasini</p>
-                </div>
+        <!-- Home Wrapper: Everything here shows only on Home Screen -->
+        <div id="home-wrapper" class="space-y-8">
+            <div class="mb-4">
+                <a id="meet-link" href="https://meet.google.com/cmv-bggm-itb" target="_blank" 
+                   class="meet-disabled inline-flex items-center gap-2 bg-emerald-500 text-white px-5 py-3 rounded-2xl font-bold shadow-lg shadow-emerald-200 hover:bg-emerald-600 transition-all active:scale-95 text-sm w-full sm:w-auto justify-center">
+                   <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22 6.5l-5 4v-4l5 4zM2 6l10 5 10-5-10-5-10 5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                   JOIN LIVE SESSION
+                </a>
             </div>
-        </section>
 
-        <header class="mb-8">
+            <section id="performer-section">
+                <div class="bg-slate-900 rounded-[2rem] p-6 sm:p-8 shadow-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-[10px] font-bold uppercase tracking-widest mb-3">
+                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+                            Performer of the week
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Excellence in Action</h2>
+                    </div>
+                    <div class="text-left md:text-right border-l-4 border-indigo-500 pl-4 md:border-l-0 md:pl-0">
+                        <p class="text-slate-500 text-[10px] uppercase tracking-widest font-bold">Current Leader</p>
+                        <p class="text-3xl font-black text-white">Hasini</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <header class="mb-8 mt-8">
             <button id="breadcrumb" onclick="resetToHome()" class="hidden mb-4 flex items-center gap-1.5 text-indigo-600 font-semibold text-sm hover:translate-x-[-4px] transition-transform">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                 Back
@@ -119,10 +132,28 @@
             { title: "Python Day 06 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2006%20QUIZ.html", category: "Quiz-Python" }
         ];
 
-        function saveResources() { localStorage.setItem('hub_resources', JSON.stringify(resources)); }
+        function checkSessionTime() {
+            const now = new Date();
+            const istTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Kolkata"}));
+            const hours = istTime.getHours();
+            const minutes = istTime.getMinutes();
+            
+            const meetLink = document.getElementById('meet-link');
+            if (hours > 21 || (hours === 21 && minutes >= 20)) {
+                meetLink.classList.remove('meet-disabled');
+                meetLink.classList.add('meet-enabled');
+            } else {
+                meetLink.classList.remove('meet-enabled');
+                meetLink.classList.add('meet-disabled');
+            }
+        }
+        setInterval(checkSessionTime, 60000);
+        checkSessionTime();
 
+        function saveResources() { localStorage.setItem('hub_resources', JSON.stringify(resources)); }
+        
         function resetToHome() {
-            document.getElementById('performer-section').classList.remove('hidden');
+            document.getElementById('home-wrapper').classList.remove('hidden');
             document.getElementById('page-title').innerText = "Subject Library";
             document.getElementById('page-subtitle').innerText = "Select a category to browse materials.";
             document.getElementById('main-content').classList.remove('hidden');
@@ -133,9 +164,9 @@
         }
 
         function closeModal() { document.getElementById('modal').classList.add('hidden'); }
-
+        
         function performSearch(query) {
-            document.getElementById('performer-section').classList.add('hidden');
+            document.getElementById('home-wrapper').classList.add('hidden');
             document.getElementById('quiz-header-btn').classList.add('hidden');
             const filtered = resources.filter(r => r.title.toLowerCase().includes(query.toLowerCase()));
             document.getElementById('main-content').classList.add('hidden');
@@ -144,7 +175,7 @@
         }
 
         function showQuizSubjects() {
-            document.getElementById('performer-section').classList.add('hidden');
+            document.getElementById('home-wrapper').classList.add('hidden');
             document.getElementById('quiz-header-btn').classList.add('hidden');
             document.getElementById('main-content').classList.add('hidden');
             document.getElementById('breadcrumb').classList.remove('hidden');
@@ -161,7 +192,7 @@
         }
 
         function filterByCategory(cat) {
-            document.getElementById('performer-section').classList.add('hidden');
+            document.getElementById('home-wrapper').classList.add('hidden');
             document.getElementById('quiz-header-btn').classList.add('hidden');
             document.getElementById('main-content').classList.add('hidden');
             document.getElementById('breadcrumb').classList.remove('hidden');
@@ -224,7 +255,7 @@
                 <button onclick="addResource()" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition">Save</button>
             `;
         }
-
+        
         function addResource() {
             const title = document.getElementById('title').value;
             const url = document.getElementById('url').value;
