@@ -139,7 +139,11 @@
             const minutes = istTime.getMinutes();
             
             const meetLink = document.getElementById('meet-link');
-            if (hours > 21 || (hours === 21 && minutes >= 20)) {
+            
+            // Logic: Enabled from 9:20 PM (21:20) until 11:00 PM (23:00)
+            const isLive = (hours === 21 && minutes >= 20) || (hours === 22);
+
+            if (isLive) {
                 meetLink.classList.remove('meet-disabled');
                 meetLink.classList.add('meet-enabled');
             } else {
