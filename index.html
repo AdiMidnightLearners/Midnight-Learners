@@ -31,7 +31,7 @@
 
     <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         
-        <section class="mb-12 sm:mb-16">
+        <section id="performer-section" class="mb-12 sm:mb-16">
             <div class="bg-slate-900 rounded-[2rem] p-6 sm:p-8 shadow-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div>
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-[10px] font-bold uppercase tracking-widest mb-3">
@@ -52,48 +52,43 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                 Back
             </button>
-            <h2 id="page-title" class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Subject Library</h2>
-            <p id="page-subtitle" class="text-slate-500 mt-2 text-base sm:text-lg">Select a category to browse materials.</p>
+            <div class="flex items-center justify-between gap-4">
+                <div>
+                    <h2 id="page-title" class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Subject Library</h2>
+                    <p id="page-subtitle" class="text-slate-500 mt-2 text-base sm:text-lg">Select a category to browse materials.</p>
+                </div>
+                <button id="quiz-header-btn" onclick="showQuizSubjects()" class="shrink-0 flex items-center gap-2 bg-indigo-50 text-indigo-700 px-5 py-2.5 rounded-full font-bold text-sm hover:bg-indigo-100 transition-all border border-indigo-100">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                    Quizzes
+                </button>
+            </div>
         </header>
 
         <div id="main-content" class="space-y-8 sm:space-y-12">
-            <!-- 3 Items per row -->
             <div class="grid grid-cols-3 gap-3">
-                <div onclick="filterByCategory('Python')" class="card cursor-pointer bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 border-slate-900 shadow-sm flex items-center gap-3">
+                <div onclick="filterByCategory('Python')" class="card cursor-pointer bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
                     <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 font-bold text-xs shrink-0">PY</div>
                     <h3 class="text-xs sm:text-sm font-bold text-slate-900 truncate">Python</h3>
                 </div>
-                <div onclick="filterByCategory('DSA')" class="card cursor-pointer bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 border-slate-900 shadow-sm flex items-center gap-3">
+                <div onclick="filterByCategory('DSA')" class="card cursor-pointer bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
                     <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 font-bold text-xs shrink-0">DS</div>
                     <h3 class="text-xs sm:text-sm font-bold text-slate-900 truncate">DSA</h3>
                 </div>
-                <div onclick="filterByCategory('Aptitude')" class="card cursor-pointer bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 border-slate-900 shadow-sm flex items-center gap-3">
+                <div onclick="filterByCategory('Aptitude')" class="card cursor-pointer bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
                     <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-orange-50 flex items-center justify-center text-orange-600 font-bold text-xs shrink-0">AT</div>
                     <h3 class="text-xs sm:text-sm font-bold text-slate-900 truncate">Aptitude</h3>
                 </div>
-                <div onclick="filterByCategory('Power BI')" class="card cursor-pointer bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 border-slate-900 shadow-sm flex items-center gap-3">
+                <div onclick="filterByCategory('Power BI')" class="card cursor-pointer bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
                     <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 font-bold text-xs shrink-0">PB</div>
                     <h3 class="text-xs sm:text-sm font-bold text-slate-900 truncate">Power BI</h3>
                 </div>
-                <div onclick="filterByCategory('ML')" class="card cursor-pointer bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 border-slate-900 shadow-sm flex items-center gap-3">
+                <div onclick="filterByCategory('ML')" class="card cursor-pointer bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
                     <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 font-bold text-xs shrink-0">ML</div>
                     <h3 class="text-xs sm:text-sm font-bold text-slate-900 truncate">ML</h3>
                 </div>
-                <div onclick="filterByCategory('AI')" class="card cursor-pointer bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 border-slate-900 shadow-sm flex items-center gap-3">
+                <div onclick="filterByCategory('AI')" class="card cursor-pointer bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
                     <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-orange-50 flex items-center justify-center text-orange-600 font-bold text-xs shrink-0">AI</div>
                     <h3 class="text-xs sm:text-sm font-bold text-slate-900 truncate">AI</h3>
-                </div>
-            </div>
-            
-            <div class="border-t border-slate-200 pt-8 sm:pt-12">
-                <div onclick="filterByCategory('Quiz')" class="card cursor-pointer bg-slate-900 text-white p-6 sm:p-8 rounded-3xl flex items-center justify-between border-2 border-slate-900">
-                    <div>
-                        <h3 class="text-xl sm:text-2xl font-bold">Quizzes</h3>
-                        <p class="text-slate-400 mt-1 text-sm">Past and current assessments.</p>
-                    </div>
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 flex items-center justify-center">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-indigo-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
-                    </div>
                 </div>
             </div>
         </div>
@@ -116,23 +111,25 @@
             { title: "Day 4 - Python", url: "https://github.com/AdiMidnightLearners/Midnight-Learners/raw/main/day%204.pdf", category: "Python" },
             { title: "Day 5 - Python", url: "https://github.com/AdiMidnightLearners/Midnight-Learners/raw/main/day%205.pdf", category: "Python" },
             { title: "Day 6 - Python", url: "https://github.com/AdiMidnightLearners/Midnight-Learners/raw/main/day%206.pdf", category: "Python" },
-            { title: "Day 1 - DSA ", url: "https://github.com/AdiMidnightLearners/Midnight-Learners/raw/main/dsa%20day%201.pdf", category: "DSA" },
-            { title: "DSA Day 01 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/DAY%2001%20DSA%20QUIZ.html", category: "Quiz" },
-            { title: "Python Day 01 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2001%20QUIZ.html", category: "Quiz" },
-            { title: "Python Day 02 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2002%20QUIZ.html", category: "Quiz" },
-            { title: "Python Day 03 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2003%20QUIZ.html", category: "Quiz" },
-            { title: "Python Day 04 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2004%20QUIZ.html", category: "Quiz" },
-            { title: "Python Day 05 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2005%20QUIZ.html", category: "Quiz" },
-            { title: "Python Day 06 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2006%20QUIZ.html", category: "Quiz" }
+            { title: "Day 1 - DSA", url: "https://github.com/AdiMidnightLearners/Midnight-Learners/raw/main/dsa%20day%201.pdf", category: "DSA" },
+            { title: "DSA Day 01 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/DAY%2001%20DSA%20QUIZ.html", category: "Quiz-DSA" },
+            { title: "Python Day 01 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2001%20QUIZ.html", category: "Quiz-Python" },
+            { title: "Python Day 02 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2002%20QUIZ.html", category: "Quiz-Python" },
+            { title: "Python Day 03 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2003%20QUIZ.html", category: "Quiz-Python" },
+            { title: "Python Day 04 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2004%20QUIZ.html", category: "Quiz-Python" },
+            { title: "Python Day 05 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2005%20QUIZ.html", category: "Quiz-Python" },
+            { title: "Python Day 06 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2006%20QUIZ.html", category: "Quiz-Python" }
         ];
 
         function saveResources() { localStorage.setItem('hub_resources', JSON.stringify(resources)); }
 
         function resetToHome() {
+            document.getElementById('performer-section').classList.remove('hidden');
             document.getElementById('page-title').innerText = "Subject Library";
             document.getElementById('page-subtitle').innerText = "Select a category to browse materials.";
             document.getElementById('main-content').classList.remove('hidden');
             document.getElementById('breadcrumb').classList.add('hidden');
+            document.getElementById('quiz-header-btn').classList.remove('hidden');
             document.getElementById('resource-grid').innerHTML = '';
             document.getElementById('search-input').value = '';
         }
@@ -140,17 +137,38 @@
         function closeModal() { document.getElementById('modal').classList.add('hidden'); }
 
         function performSearch(query) {
+            document.getElementById('performer-section').classList.add('hidden');
+            document.getElementById('quiz-header-btn').classList.add('hidden');
             const filtered = resources.filter(r => r.title.toLowerCase().includes(query.toLowerCase()));
             document.getElementById('main-content').classList.add('hidden');
             document.getElementById('breadcrumb').classList.remove('hidden');
             renderResources(filtered, "Search Results", `Found ${filtered.length} matches`);
         }
 
+        function showQuizSubjects() {
+            document.getElementById('performer-section').classList.add('hidden');
+            document.getElementById('quiz-header-btn').classList.add('hidden');
+            document.getElementById('main-content').classList.add('hidden');
+            document.getElementById('breadcrumb').classList.remove('hidden');
+            document.getElementById('page-title').innerText = "Quiz Subjects";
+            document.getElementById('page-subtitle').innerText = "Select a subject to view its quizzes.";
+            
+            const subjects = ["Python", "DSA", "Aptitude", "Power BI", "ML", "AI"];
+            const grid = document.getElementById('resource-grid');
+            grid.innerHTML = subjects.map(s => `
+                <div onclick="filterByCategory('Quiz-${s}')" class="card cursor-pointer bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center">
+                    <h3 class="font-bold text-lg">${s}</h3>
+                </div>
+            `).join('');
+        }
+
         function filterByCategory(cat) {
+            document.getElementById('performer-section').classList.add('hidden');
+            document.getElementById('quiz-header-btn').classList.add('hidden');
             document.getElementById('main-content').classList.add('hidden');
             document.getElementById('breadcrumb').classList.remove('hidden');
             const filtered = resources.filter(r => r.category === cat);
-            renderResources(filtered, cat, `Showing materials for ${cat}`);
+            renderResources(filtered, cat.replace('Quiz-', ''), `Showing materials for ${cat.replace('Quiz-', '')}`);
         }
 
         function renderResources(items, title, subtitle) {
@@ -164,7 +182,7 @@
                 return `
                     <div class="card bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-between">
                         <div>
-                            <span class="text-[9px] font-bold text-indigo-500 uppercase tracking-widest">${res.category}</span>
+                            <span class="text-[9px] font-bold text-indigo-500 uppercase tracking-widest">${res.category.replace('Quiz-', '')}</span>
                             <h3 class="font-bold text-sm sm:text-lg mt-1 sm:mt-2 text-slate-900 line-clamp-2">${res.title}</h3>
                         </div>
                         <a href="${targetUrl}" target="_blank" class="mt-4 sm:mt-6 flex items-center gap-1 sm:gap-2 text-indigo-600 font-bold text-[10px] sm:text-xs uppercase tracking-wider hover:text-indigo-800 transition">
@@ -172,7 +190,7 @@
                         </a>
                     </div>
                 `;
-            }).join('') : `<p class="col-span-full text-slate-500 py-12">No resources found.</p>`;
+            }).join('') : `<p class="col-span-full text-slate-500 py-12">No materials found in this category.</p>`;
         }
 
         function checkAccess() {
@@ -202,7 +220,8 @@
                     <option value="Python">Python</option>
                     <option value="DSA">DSA</option>
                     <option value="Aptitude">Aptitude</option>
-                    <option value="Quiz">Quiz</option>
+                    <option value="Quiz-Python">Quiz-Python</option>
+                    <option value="Quiz-DSA">Quiz-DSA</option>
                 </select>
                 <button onclick="addResource()" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition">Save</button>
             `;
