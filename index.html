@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Hub | Secure Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen">
+
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-40">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center gap-3">
+            <h1 class="text-xl font-bold tracking-tight text-indigo-600 cursor-pointer" onclick="resetToHome()">LearningHub</h1>
+            
+            <div class="flex-1 w-full order-3 md:order-2 max-w-sm">
+                <input id="search-input" type="text" oninput="performSearch(this.value)" placeholder="Search resources..." class="w-full bg-slate-100 border border-slate-200 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+            </div>
+
+            <button onclick="checkAccess()" class="order-2 md:order-3 bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition">Add Resource</button>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+        
+        <!-- Mentor Profile -->
+        <section class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm mb-12 flex flex-col md:flex-row items-center gap-6 md:gap-8 overflow-hidden">
+            <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-indigo-100 border-4 border-white shadow-inner flex items-center justify-center overflow-hidden flex-shrink-0">
+                <img src="https://ui-avatars.com/api/?name=Mentor&background=e0e7ff&color=4f46e5&size=128" alt="Mentor" class="w-full h-full object-cover">
+            </div>
+            <div class="flex flex-col justify-center">
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-1 sm:mb-2">About Your Mentor</h2>
+                <p class="text-slate-600 text-xs sm:text-sm mb-3">
+                    I believe that true knowledge is shared. My approach focuses on simplifying complex topics through hands-on practice, ensuring we <strong>succeed together</strong>. This portal is my way of keeping all our essential materials organized.
+                </p>
+                <div class="flex items-center gap-2 text-[10px] sm:text-xs font-semibold text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-full self-start">
+                    <span>Team: Kanchana • Pranavi • Sunitha • Hasini</span>
+                </div>
+            </div>
+        </section>
+
+        <header class="mb-8">
+            <div id="breadcrumb" class="hidden mb-2">
+                <button onclick="resetToHome()" class="text-indigo-600 text-sm font-semibold hover:underline">← Back to All</button>
+            </div>
+            <h2 id="page-title" class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-2">Subject Library</h2>
+            <p id="page-subtitle" class="text-slate-600 text-sm sm:text-base">Select a subject to explore all materials.</p>
+        </header>
+
+        <div id="main-content" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div onclick="filterByCategory('Python')" class="cursor-pointer bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition">
+                <h3 class="text-lg font-bold text-slate-800">Python</h3>
+            </div>
+            <div onclick="filterByCategory('DSA')" class="cursor-pointer bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition">
+                <h3 class="text-lg font-bold text-slate-800">DSA</h3>
+            </div>
+            <div onclick="filterByCategory('Aptitude')" class="cursor-pointer bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition">
+                <h3 class="text-lg font-bold text-slate-800">Aptitude</h3>
+            </div>
+            <div onclick="filterByCategory('Quiz')" class="cursor-pointer bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition">
+                <h3 class="text-lg font-bold text-slate-800">Quiz</h3>
+            </div>
+        </div>
+
+        <div id="resource-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </main>
+
+    <!-- Modal -->
+    <div id="modal" class="hidden fixed inset-0 bg-slate-900/50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 w-full max-w-sm shadow-2xl relative">
+            <button onclick="closeModal()" class="absolute top-3 right-3 p-2 text-slate-400 hover:text-slate-600">&times;</button>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <script>
+        // Data Persistence: Loads from local storage or defaults
+        let resources = JSON.parse(localStorage.getItem('hub_resources')) || [
+            { title: "Day 1 - Python Basics", url: "https://github.com/AdiMidnightLearners/Midnight-Learners/raw/main/day%201.pdf", category: "Python" },
+            { title: "Day 2 - Python Basics", url: "https://github.com/AdiMidnightLearners/Midnight-Learners/raw/main/day%202.pdf", category: "Python" },
+            { title: "Day 3 - Python Basics", url: "https://github.com/AdiMidnightLearners/Midnight-Learners/raw/main/day%203.pdf", category: "Python" },
+            { title: "Day 4 - Python Basics", url: "https://github.com/AdiMidnightLearners/Midnight-Learners/raw/main/day%204.pdf", category: "Python" },
+            { title: "Day 5 - Python Basics", url: "https://github.com/AdiMidnightLearners/Midnight-Learners/raw/main/day%205.pdf", category: "Python" },
+            { title: "Day 6 - Python Basics", url: "https://github.com/AdiMidnightLearners/Midnight-Learners/raw/main/day%206.pdf", category: "Python" }
+        ];
+
+        function saveResources() {
+            localStorage.setItem('hub_resources', JSON.stringify(resources));
+        }
+
+        function resetToHome() {
+            document.getElementById('page-title').innerText = "Subject Library";
+            document.getElementById('page-subtitle').innerText = "Select a subject to explore all materials.";
+            document.getElementById('main-content').classList.remove('hidden');
+            document.getElementById('breadcrumb').classList.add('hidden');
+            document.getElementById('resource-grid').innerHTML = '';
+            document.getElementById('search-input').value = '';
+        }
+
+        function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+
+        function performSearch(query) {
+            const filtered = resources.filter(r => r.title.toLowerCase().includes(query.toLowerCase()));
+            document.getElementById('main-content').classList.add('hidden');
+            document.getElementById('breadcrumb').classList.remove('hidden');
+            renderResources(filtered, "Search Results", `Found ${filtered.length} matches`);
+        }
+
+        function filterByCategory(cat) {
+            document.getElementById('main-content').classList.add('hidden');
+            document.getElementById('breadcrumb').classList.remove('hidden');
+            const filtered = resources.filter(r => r.category === cat);
+            renderResources(filtered, cat, `Materials for ${cat}`);
+        }
+
+        function renderResources(items, title, subtitle) {
+            document.getElementById('page-title').innerText = title;
+            document.getElementById('page-subtitle').innerText = subtitle;
+            const grid = document.getElementById('resource-grid');
+            
+            grid.innerHTML = items.length > 0 ? items.map(res => {
+                // Wrap PDF URLs in Google Docs Viewer to force browser preview
+                const isPdf = res.url.toLowerCase().endsWith('.pdf');
+                const targetUrl = isPdf ? `https://docs.google.com/viewer?url=${res.url}&embedded=true` : res.url;
+                
+                return `
+                    <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+                        <span class="text-[10px] uppercase font-bold text-indigo-500">${res.category}</span>
+                        <h3 class="font-bold text-md mb-3 text-slate-900">${res.title}</h3>
+                        <a href="${targetUrl}" target="_blank" class="text-indigo-600 font-semibold text-xs uppercase tracking-wider hover:underline">Open File →</a>
+                    </div>
+                `;
+            }).join('') : `<p class="col-span-full text-slate-500">No resources found.</p>`;
+        }
+
+        function checkAccess() {
+            document.getElementById('modal').classList.remove('hidden');
+            document.getElementById('modal-content').innerHTML = `
+                <h3 class="text-xl font-bold mb-4">Enter Access Key</h3>
+                <input id="passkey" type="password" placeholder="Enter key..." class="w-full p-3 border rounded-lg mb-4">
+                <button onclick="verifyKey()" class="w-full bg-indigo-600 text-white py-2 rounded-lg font-bold">Verify</button>
+            `;
+        }
+
+        function verifyKey() {
+            if(document.getElementById('passkey').value === "adi105") {
+                showAddForm();
+            } else {
+                document.getElementById('passkey').placeholder = "Incorrect Key!";
+                document.getElementById('passkey').value = "";
+            }
+        }
+
+        function showAddForm() {
+            document.getElementById('modal-content').innerHTML = `
+                <h3 class="text-xl font-bold mb-4">Add Material / Quiz</h3>
+                <input id="title" type="text" placeholder="Title (e.g. Week 1 PDF)" class="w-full p-3 border mb-3 rounded-lg text-sm">
+                <input id="url" type="url" placeholder="Paste Link to PDF/HTML file" class="w-full p-3 border mb-3 rounded-lg text-sm">
+                <select id="category" class="w-full p-3 border mb-3 rounded-lg text-sm">
+                    <option value="Python">Python</option>
+                    <option value="DSA">DSA</option>
+                    <option value="Aptitude">Aptitude</option>
+                    <option value="Quiz">Quiz</option>
+                </select>
+                <button onclick="addResource()" class="w-full bg-green-600 text-white py-2 rounded-lg font-bold text-sm">Add Item</button>
+            `;
+        }
+
+        function addResource() {
+            const title = document.getElementById('title').value;
+            const url = document.getElementById('url').value;
+            const category = document.getElementById('category').value;
+            if(title && url) {
+                resources.push({title, url, category});
+                saveResources(); // Save to localStorage
+                closeModal();
+                filterByCategory(category);
+            }
+        }
+    </script>
+</body>
+</html>
