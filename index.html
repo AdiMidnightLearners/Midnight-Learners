@@ -29,7 +29,7 @@
         <!-- Mentor Profile -->
         <section class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm mb-12 flex flex-col md:flex-row items-center gap-6 md:gap-8 overflow-hidden">
             <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-indigo-100 border-4 border-white shadow-inner flex items-center justify-center overflow-hidden flex-shrink-0">
-                <img src="https://github.com/AdiMidnightLearners/Midnight-Learners/blob/main/pic.jpg" alt="Mentor" class="w-full h-full object-cover">
+                <img src="https://github.com/AdiMidnightLearners/Midnight-Learners/blob/main/pic.jpg?raw=true" alt="Mentor" class="w-full h-full object-cover">
             </div>
             <div class="flex flex-col justify-center">
                 <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-1 sm:mb-2">About Your Mentor</h2>
@@ -84,7 +84,14 @@
             { title: "Day 3 - Python Basics", url: "https://github.com/AdiMidnightLearners/Midnight-Learners/raw/main/day%203.pdf", category: "Python" },
             { title: "Day 4 - Python Basics", url: "https://github.com/AdiMidnightLearners/Midnight-Learners/raw/main/day%204.pdf", category: "Python" },
             { title: "Day 5 - Python Basics", url: "https://github.com/AdiMidnightLearners/Midnight-Learners/raw/main/day%205.pdf", category: "Python" },
-            { title: "Day 6 - Python Basics", url: "https://github.com/AdiMidnightLearners/Midnight-Learners/raw/main/day%206.pdf", category: "Python" }
+            { title: "Day 6 - Python Basics", url: "https://github.com/AdiMidnightLearners/Midnight-Learners/raw/main/day%206.pdf", category: "Python" },
+            { title: "Day 01 DSA Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/DAY%2001%20DSA%20QUIZ.html", category: "Quiz" },
+            { title: "Python Day 01 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2001%20QUIZ.html", category: "Quiz" },
+            { title: "Python Day 02 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2002%20QUIZ.html", category: "Quiz" },
+            { title: "Python Day 03 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2003%20QUIZ.html", category: "Quiz" },
+            { title: "Python Day 04 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2004%20QUIZ.html", category: "Quiz" },
+            { title: "Python Day 05 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2005%20QUIZ.html", category: "Quiz" },
+            { title: "Python Day 06 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2006%20QUIZ.html", category: "Quiz" }
         ];
 
         function saveResources() {
@@ -122,9 +129,9 @@
             const grid = document.getElementById('resource-grid');
             
             grid.innerHTML = items.length > 0 ? items.map(res => {
-                // Wrap PDF URLs in Google Docs Viewer to force browser preview
+                // Wrap PDF URLs in Google Docs Viewer and encode the URL properly
                 const isPdf = res.url.toLowerCase().endsWith('.pdf');
-                const targetUrl = isPdf ? `https://docs.google.com/viewer?url=${res.url}&embedded=true` : res.url;
+                const targetUrl = isPdf ? `https://docs.google.com/viewer?url=${encodeURIComponent(res.url)}&embedded=true` : res.url;
                 
                 return `
                     <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
@@ -157,8 +164,8 @@
         function showAddForm() {
             document.getElementById('modal-content').innerHTML = `
                 <h3 class="text-xl font-bold mb-4">Add Material / Quiz</h3>
-                <input id="title" type="text" placeholder="Title (e.g. Week 1 PDF)" class="w-full p-3 border mb-3 rounded-lg text-sm">
-                <input id="url" type="url" placeholder="Paste Link to PDF/HTML file" class="w-full p-3 border mb-3 rounded-lg text-sm">
+                <input id="title" type="text" placeholder="Title" class="w-full p-3 border mb-3 rounded-lg text-sm">
+                <input id="url" type="url" placeholder="Paste Link" class="w-full p-3 border mb-3 rounded-lg text-sm">
                 <select id="category" class="w-full p-3 border mb-3 rounded-lg text-sm">
                     <option value="Python">Python</option>
                     <option value="DSA">DSA</option>
@@ -175,7 +182,7 @@
             const category = document.getElementById('category').value;
             if(title && url) {
                 resources.push({title, url, category});
-                saveResources(); // Save to localStorage
+                saveResources();
                 closeModal();
                 filterByCategory(category);
             }
