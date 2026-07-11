@@ -42,7 +42,7 @@
                 </div>
                 <div class="text-left md:text-right border-l-4 border-indigo-500 pl-4 md:border-l-0 md:pl-0">
                     <p class="text-slate-500 text-[10px] uppercase tracking-widest font-bold">Current Leader</p>
-                    <p class="text-3xl font-black text-white">SUINITHA</p>
+                    <p class="text-3xl font-black text-white">Hasini</p>
                 </div>
             </div>
         </section>
@@ -52,12 +52,12 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                 Back
             </button>
-            <div class="flex items-center justify-between gap-4">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <h2 id="page-title" class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Subject Library</h2>
                     <p id="page-subtitle" class="text-slate-500 mt-2 text-base sm:text-lg">Select a category to browse materials.</p>
                 </div>
-                <button id="quiz-header-btn" onclick="showQuizSubjects()" class="shrink-0 flex items-center gap-2 bg-indigo-50 text-indigo-700 px-5 py-2.5 rounded-full font-bold text-sm hover:bg-indigo-100 transition-all border border-indigo-100">
+                <button id="quiz-btn" onclick="showQuizSubjects()" class="shrink-0 flex items-center gap-2 bg-indigo-50 text-indigo-700 px-5 py-2.5 rounded-full font-bold text-sm hover:bg-indigo-100 transition-all border border-indigo-100 self-start">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
                     Quizzes
                 </button>
@@ -65,7 +65,7 @@
         </header>
 
         <div id="main-content" class="space-y-8 sm:space-y-12">
-            <div class="grid grid-cols-3 gap-3">
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 <div onclick="filterByCategory('Python')" class="card cursor-pointer bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
                     <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 font-bold text-xs shrink-0">PY</div>
                     <h3 class="text-xs sm:text-sm font-bold text-slate-900 truncate">Python</h3>
@@ -117,7 +117,7 @@
             { title: "Python Day 02 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2002%20QUIZ.html", category: "Quiz-Python" },
             { title: "Python Day 03 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2003%20QUIZ.html", category: "Quiz-Python" },
             { title: "Python Day 04 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2004%20QUIZ.html", category: "Quiz-Python" },
-            { title: "Python Day 05 Quiz", url: "ttps://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2005%20QUIZ.HTML", category: "Quiz-Python" },
+            { title: "Python Day 05 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2005%20QUIZ.HTML", category: "Quiz-Python" },
             { title: "Python Day 06 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2006%20QUIZ.html", category: "Quiz-Python" }
         ];
 
@@ -125,11 +125,11 @@
 
         function resetToHome() {
             document.getElementById('performer-section').classList.remove('hidden');
+            document.getElementById('quiz-btn').classList.remove('hidden');
             document.getElementById('page-title').innerText = "Subject Library";
             document.getElementById('page-subtitle').innerText = "Select a category to browse materials.";
             document.getElementById('main-content').classList.remove('hidden');
             document.getElementById('breadcrumb').classList.add('hidden');
-            document.getElementById('quiz-header-btn').classList.remove('hidden');
             document.getElementById('resource-grid').innerHTML = '';
             document.getElementById('search-input').value = '';
         }
@@ -138,7 +138,7 @@
 
         function performSearch(query) {
             document.getElementById('performer-section').classList.add('hidden');
-            document.getElementById('quiz-header-btn').classList.add('hidden');
+            document.getElementById('quiz-btn').classList.add('hidden');
             const filtered = resources.filter(r => r.title.toLowerCase().includes(query.toLowerCase()));
             document.getElementById('main-content').classList.add('hidden');
             document.getElementById('breadcrumb').classList.remove('hidden');
@@ -147,7 +147,7 @@
 
         function showQuizSubjects() {
             document.getElementById('performer-section').classList.add('hidden');
-            document.getElementById('quiz-header-btn').classList.add('hidden');
+            document.getElementById('quiz-btn').classList.add('hidden');
             document.getElementById('main-content').classList.add('hidden');
             document.getElementById('breadcrumb').classList.remove('hidden');
             document.getElementById('page-title').innerText = "Quiz Subjects";
@@ -164,7 +164,7 @@
 
         function filterByCategory(cat) {
             document.getElementById('performer-section').classList.add('hidden');
-            document.getElementById('quiz-header-btn').classList.add('hidden');
+            document.getElementById('quiz-btn').classList.add('hidden');
             document.getElementById('main-content').classList.add('hidden');
             document.getElementById('breadcrumb').classList.remove('hidden');
             const filtered = resources.filter(r => r.category === cat);
