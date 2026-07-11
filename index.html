@@ -3,84 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Midnight Learning Hub | Secure Portal</title>
+    <title>MidnightBuilders | Premium Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap');
-        body { font-family: 'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
+        .card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 min-h-screen">
+<body class="text-slate-900 min-h-screen">
 
-    <nav class="bg-white border-b border-slate-200 sticky top-0 z-40">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center gap-3">
-            <h1 class="text-xl font-bold tracking-tight text-indigo-600 cursor-pointer" onclick="resetToHome()">MidnightBuilders</h1>
-            
-            <div class="flex-1 w-full order-3 md:order-2 max-w-sm">
-                <input id="search-input" type="text" oninput="performSearch(this.value)" placeholder="Search resources..." class="w-full bg-slate-100 border border-slate-200 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+    <nav class="glass sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="resetToHome()">
+                <div class="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-200">M</div>
+                <h1 class="text-lg font-bold tracking-tight text-slate-900 hidden sm:block">Midnight<span class="text-indigo-600">Builders</span></h1>
             </div>
-
-            <button onclick="checkAccess()" class="order-2 md:order-3 bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition">Add Resource</button>
+            
+            <div class="flex items-center gap-2 sm:gap-6">
+                <input id="search-input" type="text" oninput="performSearch(this.value)" placeholder="Search..." class="bg-white border border-slate-200 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-100 transition-all text-sm w-32 sm:w-64 shadow-inner">
+                <button onclick="checkAccess()" class="bg-slate-900 text-white px-4 py-2 rounded-full text-xs sm:text-sm font-semibold hover:bg-slate-800 transition-all shadow-lg active:scale-95">Add</button>
+            </div>
         </div>
     </nav>
 
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-
-        <section class="mb-12">
-            <div class="relative bg-slate-900 rounded-3xl p-8 sm:p-10 shadow-2xl overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 border border-slate-800">
-                <!-- Abstract background glow -->
-                <div class="absolute -top-12 -right-12 w-48 h-48 bg-indigo-600 rounded-full blur-3xl opacity-30"></div>
-                <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-purple-600 rounded-full blur-3xl opacity-30"></div>
-                
-                <div class="relative z-10 w-full md:w-auto text-center md:text-left">
-                    <span class="text-indigo-400 font-bold tracking-[0.2em] uppercase text-[10px] mb-2 block">Performer of the Week</span>
-                    <h2 class="text-white text-3xl sm:text-4xl font-bold tracking-tight">Excellence in Action</h2>
-                </div>
-
-                <div class="relative z-10 flex flex-col items-center md:items-end w-full md:w-auto">
-                    <span class="text-slate-400 text-xs font-medium uppercase tracking-wider mb-1">Current Leader</span>
-                    <div class="text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-amber-400 to-orange-500 tracking-tighter drop-shadow-lg leading-none">
-                        Hasini
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        
+        <section class="mb-12 sm:mb-16">
+            <div class="bg-slate-900 rounded-[2rem] p-6 sm:p-8 shadow-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-[10px] font-bold uppercase tracking-widest mb-3">
+                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+                        Performer of the week
                     </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Excellence in Action</h2>
+                </div>
+                <div class="text-left md:text-right border-l-4 border-indigo-500 pl-4 md:border-l-0 md:pl-0">
+                    <p class="text-slate-500 text-[10px] uppercase tracking-widest font-bold">Current Leader</p>
+                    <p class="text-3xl font-black text-white">Hasini</p>
                 </div>
             </div>
         </section>
 
         <header class="mb-8">
-            <div id="breadcrumb" class="hidden mb-2">
-                <button onclick="resetToHome()" class="text-indigo-600 text-sm font-semibold hover:underline">← Back to All</button>
-            </div>
-            <h2 id="page-title" class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-2">Subject Library</h2>
-            <p id="page-subtitle" class="text-slate-600 text-sm sm:text-base">Select a subject or task to explore materials.</p>
+            <button id="breadcrumb" onclick="resetToHome()" class="hidden mb-4 flex items-center gap-1.5 text-indigo-600 font-semibold text-sm hover:translate-x-[-4px] transition-transform">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                Back
+            </button>
+            <h2 id="page-title" class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Subject Library</h2>
+            <p id="page-subtitle" class="text-slate-500 mt-2 text-base sm:text-lg">Select a category to browse materials.</p>
         </header>
 
-        <div id="main-content" class="space-y-8">
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div onclick="filterByCategory('Python')" class="cursor-pointer bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition text-center">
-                    <h3 class="text-lg font-bold text-slate-800">Python</h3>
+        <div id="main-content" class="space-y-8 sm:space-y-12">
+            <!-- 3 Items per row -->
+            <div class="grid grid-cols-3 gap-3">
+                <div onclick="filterByCategory('Python')" class="card cursor-pointer bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 border-slate-900 shadow-sm flex items-center gap-3">
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 font-bold text-xs shrink-0">PY</div>
+                    <h3 class="text-xs sm:text-sm font-bold text-slate-900 truncate">Python</h3>
                 </div>
-                <div onclick="filterByCategory('DSA')" class="cursor-pointer bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition text-center">
-                    <h3 class="text-lg font-bold text-slate-800">DSA</h3>
+                <div onclick="filterByCategory('DSA')" class="card cursor-pointer bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 border-slate-900 shadow-sm flex items-center gap-3">
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 font-bold text-xs shrink-0">DS</div>
+                    <h3 class="text-xs sm:text-sm font-bold text-slate-900 truncate">DSA</h3>
                 </div>
-                <div onclick="filterByCategory('Aptitude')" class="cursor-pointer bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition text-center">
-                    <h3 class="text-lg font-bold text-slate-800">Aptitude</h3>
+                <div onclick="filterByCategory('Aptitude')" class="card cursor-pointer bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 border-slate-900 shadow-sm flex items-center gap-3">
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-orange-50 flex items-center justify-center text-orange-600 font-bold text-xs shrink-0">AT</div>
+                    <h3 class="text-xs sm:text-sm font-bold text-slate-900 truncate">Aptitude</h3>
                 </div>
             </div>
-            <div class="border-t pt-8">
-                <h3 class="text-xl font-bold text-slate-800 mb-4">Practice Tasks</h3>
-                <div onclick="filterByCategory('Quiz')" class="cursor-pointer bg-indigo-50 border-2 border-dashed border-indigo-200 p-6 rounded-xl hover:bg-indigo-100 transition">
-                    <h3 class="text-lg font-bold text-indigo-700">Daily Quizzes</h3>
-                    <p class="text-sm text-indigo-600">Access all past and current topic quizzes here.</p>
+            
+            <div class="border-t border-slate-200 pt-8 sm:pt-12">
+                <div onclick="filterByCategory('Quiz')" class="card cursor-pointer bg-slate-900 text-white p-6 sm:p-8 rounded-3xl flex items-center justify-between border-2 border-slate-900">
+                    <div>
+                        <h3 class="text-xl sm:text-2xl font-bold">Quizzes</h3>
+                        <p class="text-slate-400 mt-1 text-sm">Past and current assessments.</p>
+                    </div>
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 flex items-center justify-center">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-indigo-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div id="resource-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        <div id="resource-grid" class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6"></div>
     </main>
 
-    <div id="modal" class="hidden fixed inset-0 bg-slate-900/50 flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-2xl p-6 sm:p-8 w-full max-w-sm shadow-2xl relative">
-            <button onclick="closeModal()" class="absolute top-3 right-3 p-2 text-slate-400 hover:text-slate-600">&times;</button>
+    <div id="modal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-[60]">
+        <div class="bg-white rounded-[2rem] p-6 sm:p-8 w-full max-w-sm shadow-2xl relative">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition">✕</button>
             <div id="modal-content"></div>
         </div>
     </div>
@@ -107,7 +118,7 @@
 
         function resetToHome() {
             document.getElementById('page-title').innerText = "Subject Library";
-            document.getElementById('page-subtitle').innerText = "Select a subject or task to explore all materials.";
+            document.getElementById('page-subtitle').innerText = "Select a category to browse materials.";
             document.getElementById('main-content').classList.remove('hidden');
             document.getElementById('breadcrumb').classList.add('hidden');
             document.getElementById('resource-grid').innerHTML = '';
@@ -127,7 +138,7 @@
             document.getElementById('main-content').classList.add('hidden');
             document.getElementById('breadcrumb').classList.remove('hidden');
             const filtered = resources.filter(r => r.category === cat);
-            renderResources(filtered, cat, `Materials for ${cat}`);
+            renderResources(filtered, cat, `Showing materials for ${cat}`);
         }
 
         function renderResources(items, title, subtitle) {
@@ -139,21 +150,25 @@
                 const isPdf = res.url.toLowerCase().endsWith('.pdf');
                 const targetUrl = isPdf ? `https://docs.google.com/viewer?url=${encodeURIComponent(res.url)}&embedded=true` : res.url;
                 return `
-                    <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
-                        <span class="text-[10px] uppercase font-bold text-indigo-500">${res.category}</span>
-                        <h3 class="font-bold text-md mb-3 text-slate-900">${res.title}</h3>
-                        <a href="${targetUrl}" target="_blank" class="text-indigo-600 font-semibold text-xs uppercase tracking-wider hover:underline">Open File →</a>
+                    <div class="card bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <span class="text-[9px] font-bold text-indigo-500 uppercase tracking-widest">${res.category}</span>
+                            <h3 class="font-bold text-sm sm:text-lg mt-1 sm:mt-2 text-slate-900 line-clamp-2">${res.title}</h3>
+                        </div>
+                        <a href="${targetUrl}" target="_blank" class="mt-4 sm:mt-6 flex items-center gap-1 sm:gap-2 text-indigo-600 font-bold text-[10px] sm:text-xs uppercase tracking-wider hover:text-indigo-800 transition">
+                            View →
+                        </a>
                     </div>
                 `;
-            }).join('') : `<p class="col-span-full text-slate-500">No resources found.</p>`;
+            }).join('') : `<p class="col-span-full text-slate-500 py-12">No resources found.</p>`;
         }
 
         function checkAccess() {
             document.getElementById('modal').classList.remove('hidden');
             document.getElementById('modal-content').innerHTML = `
-                <h3 class="text-xl font-bold mb-4">Enter Access Key</h3>
-                <input id="passkey" type="password" placeholder="Enter key..." class="w-full p-3 border rounded-lg mb-4">
-                <button onclick="verifyKey()" class="w-full bg-indigo-600 text-white py-2 rounded-lg font-bold">Verify</button>
+                <h3 class="text-xl font-bold mb-6 text-slate-900">Access Restricted</h3>
+                <input id="passkey" type="password" placeholder="Enter security key" class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl mb-4 text-slate-900 outline-none focus:ring-2 focus:ring-indigo-100">
+                <button onclick="verifyKey()" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition active:scale-95">Verify</button>
             `;
         }
 
@@ -161,23 +176,23 @@
             if(document.getElementById('passkey').value === "adi105") {
                 showAddForm();
             } else {
-                document.getElementById('passkey').placeholder = "Incorrect Key!";
                 document.getElementById('passkey').value = "";
+                document.getElementById('passkey').placeholder = "Invalid Key!";
             }
         }
 
         function showAddForm() {
             document.getElementById('modal-content').innerHTML = `
-                <h3 class="text-xl font-bold mb-4">Add Material / Quiz</h3>
-                <input id="title" type="text" placeholder="Title" class="w-full p-3 border mb-3 rounded-lg text-sm">
-                <input id="url" type="url" placeholder="Paste Link to PDF/HTML file" class="w-full p-3 border mb-3 rounded-lg text-sm">
-                <select id="category" class="w-full p-3 border mb-3 rounded-lg text-sm">
+                <h3 class="text-xl font-bold mb-6 text-slate-900">Add Resource</h3>
+                <input id="title" type="text" placeholder="Title" class="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl mb-3 text-sm">
+                <input id="url" type="url" placeholder="URL" class="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl mb-3 text-sm">
+                <select id="category" class="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl mb-6 text-sm">
                     <option value="Python">Python</option>
                     <option value="DSA">DSA</option>
                     <option value="Aptitude">Aptitude</option>
                     <option value="Quiz">Quiz</option>
                 </select>
-                <button onclick="addResource()" class="w-full bg-green-600 text-white py-2 rounded-lg font-bold text-sm">Add Item</button>
+                <button onclick="addResource()" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition">Save</button>
             `;
         }
 
