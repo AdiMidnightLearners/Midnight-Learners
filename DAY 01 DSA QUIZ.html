@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Mastery Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex items-center justify-center p-4">
+
+<div id="app" class="w-full max-w-2xl bg-white shadow-xl rounded-3xl p-6 md:p-10">
+    <!-- Landing View -->
+    <div id="landing" class="text-center">
+        <h1 class="text-4xl font-bold mb-4 text-indigo-600">DSA Fundamentals Quiz</h1>
+        <p class="text-slate-500 mb-8">Test your knowledge of Arrays and Basic Data Structures.</p>
+        <input type="text" id="username" placeholder="Enter your name" class="w-full p-4 border border-slate-200 rounded-xl mb-6 focus:ring-2 focus:ring-indigo-500 outline-none">
+        <button onclick="startQuiz()" class="w-full bg-indigo-600 text-white py-4 rounded-xl font-semibold hover:bg-indigo-700 transition">Begin Quiz</button>
+    </div>
+
+    <!-- Quiz View -->
+    <div id="quiz" class="hidden">
+        <div class="flex justify-between items-center mb-6">
+            <span id="progress" class="text-xs font-semibold text-indigo-600 uppercase tracking-widest"></span>
+            <span id="userNameDisplay" class="text-xs text-slate-400 font-medium"></span>
+        </div>
+        <h2 id="question" class="text-lg font-semibold mb-6 text-slate-800"></h2>
+        <div id="options" class="space-y-2"></div>
+    </div>
+
+    <!-- Result View -->
+    <div id="result" class="hidden text-center">
+        <h2 class="text-2xl font-bold mb-1">Quiz Complete!</h2>
+        <h3 id="reportName" class="text-sm font-medium text-slate-400 mb-4"></h3>
+        <p id="scoreDisplay" class="text-4xl font-bold text-indigo-600 mb-6"></p>
+        <div id="report" class="text-left space-y-2 text-xs"></div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        { q: "What is a Data Structure?", options: ["A step-by-step procedure", "A way of storing and organizing data", "A programming language", "A computer hardware component"], a: 1 },
+        { q: "Which of the following is an example of an Algorithm?", options: ["Stack", "Array", "Sorting", "Graph"], a: 2 },
+        { q: "What is an Array?", options: ["A variable that stores one value", "A data structure storing multiple values", "A sequence of functions", "A type of memory"], a: 1 },
+        { q: "Which function adds an element at the end of a list?", options: ["insert()", "pop()", "append()", "remove()"], a: 2 },
+        { q: "What does list.insert(1, 99) do to [10, 20, 30]?", options: ["[10, 20, 30, 99]", "[99, 10, 20, 30]", "[10, 99, 20, 30]", "[10, 20, 99, 30]"], a: 2 },
+        { q: "What does pop() do by default?", options: ["Removes the first element", "Removes the last element", "Adds an element", "Sorts the list"], a: 1 },
+        { q: "Which function is used to remove a specific value?", options: ["pop()", "delete()", "clear()", "remove()"], a: 3 },
+        { q: "If arr = [10, 20, 30], what is arr[0]?", options: ["10", "20", "30", "Error"], a: 0 },
+        { q: "What is the primary difference between DS and Algorithms?", options: ["None", "DS organizes data, Algorithms solve problems", "Algorithms organize data, DS solves problems", "They are the same"], a: 1 },
+        { q: "Which operation visits all elements one by one?", options: ["Update", "Access", "Traverse", "Insert"], a: 2 },
+        { q: "What will print(arr) output after arr = [10, 20]; arr.append(30); arr.pop();?", options: ["[10, 20, 30]", "[10, 30]", "[10, 20]", "[30]"], a: 2 },
+        { q: "How many arguments does insert(i, x) take?", options: ["1", "2", "3", "0"], a: 1 }
+    ];
+
+    let currentQ = 0;
+    let score = 0;
+    let userAnswers = [];
+    let userName = "";
+
+    function startQuiz() {
+        userName = document.getElementById('username').value;
+        if (!userName) return alert("Please enter your name!");
+        document.getElementById('userNameDisplay').innerText = userName;
+        document.getElementById('landing').classList.add('hidden');
+        document.getElementById('quiz').classList.remove('hidden');
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const qData = questions[currentQ];
+        document.getElementById('progress').innerText = `Question ${currentQ + 1} of ${questions.length}`;
+        document.getElementById('question').innerText = qData.q;
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = '';
+        qData.options.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'w-full text-left p-3 rounded-lg border border-slate-100 hover:border-indigo-300 hover:bg-indigo-50 transition text-sm';
+            btn.innerText = opt;
+            btn.onclick = () => selectAnswer(idx);
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function selectAnswer(idx) {
+        userAnswers.push({ q: questions[currentQ].q, selected: idx, correct: questions[currentQ].a });
+        if (idx === questions[currentQ].a) score++;
+        currentQ++;
+        if (currentQ < questions.length) renderQuestion();
+        else showResult();
+    }
+
+    function showResult() {
+        document.getElementById('quiz').classList.add('hidden');
+        document.getElementById('result').classList.remove('hidden');
+        document.getElementById('reportName').innerText = `Report for ${userName}`;
+        document.getElementById('scoreDisplay').innerText = `${score} / ${questions.length}`;
+        const report = document.getElementById('report');
+        userAnswers.forEach((ans, i) => {
+            const isCorrect = ans.selected === ans.correct;
+            const div = document.createElement('div');
+            div.className = `p-2 rounded-md ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`;
+            div.innerHTML = `<p class="font-semibold">${i + 1}. ${ans.q}</p>
+                             <p class="${isCorrect ? 'text-green-700' : 'text-red-700'}">
+                             ${isCorrect ? 'Correct!' : 'Wrong. Correct answer: ' + questions[i].options[ans.correct]}</p>`;
+            report.appendChild(div);
+        });
+    }
+</script>
+</body>
+</html>

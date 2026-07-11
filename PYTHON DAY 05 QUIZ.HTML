@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Day 5 Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex items-center justify-center p-4">
+
+<div id="app" class="w-full max-w-2xl bg-white shadow-xl rounded-3xl p-6 md:p-10">
+    <!-- Landing View -->
+    <div id="landing" class="text-center">
+        <h1 class="text-4xl font-bold mb-4 text-indigo-600">Python Day 5 Quiz</h1>
+        <p class="text-slate-500 mb-8">Test your knowledge of Loop Practice, Patterns, and Factorials.</p>
+        <input type="text" id="username" placeholder="Enter your name" class="w-full p-4 border border-slate-200 rounded-xl mb-6 focus:ring-2 focus:ring-indigo-500 outline-none">
+        <button onclick="startQuiz()" class="w-full bg-indigo-600 text-white py-4 rounded-xl font-semibold hover:bg-indigo-700 transition">Begin Quiz</button>
+    </div>
+
+    <!-- Quiz View -->
+    <div id="quiz" class="hidden">
+        <div class="flex justify-between items-center mb-6">
+            <span id="progress" class="text-xs font-semibold text-indigo-600 uppercase tracking-widest"></span>
+            <span id="userNameDisplay" class="text-xs text-slate-400 font-medium"></span>
+        </div>
+        <h2 id="question" class="text-lg font-semibold mb-6 text-slate-800"></h2>
+        <div id="options" class="space-y-2"></div>
+    </div>
+
+    <!-- Result View -->
+    <div id="result" class="hidden text-center">
+        <h2 class="text-2xl font-bold text-indigo-600 mb-1">Python Day 5 Quiz</h2>
+        <h3 id="reportName" class="text-sm font-medium text-slate-400 mb-4"></h3>
+        <p id="scoreDisplay" class="text-4xl font-bold text-slate-900 mb-6"></p>
+        <div id="report" class="text-left space-y-2 text-xs"></div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        { q: "What is the recommended initial value for a variable used to store the sum of numbers in a loop?", options: ["0", "1", "-1", "None"], a: 0 },
+        { q: "Why should a 'fact' variable be initialized to 1 instead of 0 for factorial calculations?", options: ["To save memory", "To avoid multiplying by zero", "To speed up the loop", "It is not required"], a: 1 },
+        { q: "Which loop type is generally preferred when the number of repetitions is known?", options: ["while loop", "for loop", "if-else block", "def block"], a: 1 },
+        { q: "What is the correct range function argument to generate a decreasing sequence from 10 to 1?", options: ["range(10, 0, 1)", "range(10, 0, -1)", "range(1, 10, -1)", "range(10, 1)"], a: 1 },
+        { q: "What is the purpose of 'end=\"\"' in a print() statement inside a loop?", options: ["To add a space", "To prevent a new line", "To terminate the loop", "To print a tab"], a: 1 },
+        { q: "What happens if you use range(1, 10) when you need to include 10 in the range?", options: ["10 is included", "10 is excluded", "Syntax error", "Infinite loop"], a: 1 },
+        { q: "What is a common mistake when using a while loop?", options: ["Forgetting to update the loop variable", "Using too many loops", "Variable initialization", "Indentations"], a: 0 },
+        { q: "Which of the following is the correct expression to calculate factorial inside a loop?", options: ["fact = fact + i", "fact = fact * i", "fact = fact / i", "fact = fact - i"], a: 1 },
+        { q: "How does the 'count' variable typically change during each iteration in a counting problem?", options: ["count += 1", "count = count + i", "count += 2", "count = 0"], a: 0 },
+        { q: "To print all even numbers between 1 and 20, what condition should be used?", options: ["if i % 2 == 1", "if i % 2 == 0", "if i % 2 != 0", "if i % 2 != 1"], a: 1 },
+        { q: "What is the output logic of print(\"*\" * i) when i is in range(1, 6)?", options: ["Prints numbers", "Prints star patterns", "Prints only one star", "Prints errors"], a: 1 },
+        { q: "Which loop is more appropriate when the repetition depends strictly on a condition?", options: ["for loop", "while loop", "range loop", "if loop"], a: 1 }
+    ];
+
+    let currentQ = 0, score = 0, userAnswers = [], userName = "";
+
+    function startQuiz() {
+        userName = document.getElementById('username').value;
+        if (!userName) return alert("Please enter your name!");
+        document.getElementById('userNameDisplay').innerText = userName;
+        document.getElementById('landing').classList.add('hidden');
+        document.getElementById('quiz').classList.remove('hidden');
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const qData = questions[currentQ];
+        document.getElementById('progress').innerText = `Question ${currentQ + 1} of ${questions.length}`;
+        document.getElementById('question').innerText = qData.q;
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = '';
+        qData.options.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'w-full text-left p-3 rounded-lg border border-slate-100 hover:border-indigo-300 hover:bg-indigo-50 transition text-sm';
+            btn.innerText = opt;
+            btn.onclick = () => selectAnswer(idx);
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function selectAnswer(idx) {
+        userAnswers.push({ q: questions[currentQ].q, selected: idx, correct: questions[currentQ].a });
+        if (idx === questions[currentQ].a) score++;
+        currentQ++;
+        if (currentQ < questions.length) renderQuestion();
+        else showResult();
+    }
+
+    function showResult() {
+        document.getElementById('quiz').classList.add('hidden');
+        document.getElementById('result').classList.remove('hidden');
+        document.getElementById('reportName').innerText = `Results for ${userName}`;
+        document.getElementById('scoreDisplay').innerText = `${score} / ${questions.length}`;
+        const report = document.getElementById('report');
+        userAnswers.forEach((ans, i) => {
+            const isCorrect = ans.selected === ans.correct;
+            const div = document.createElement('div');
+            div.className = `p-2 rounded-md ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`;
+            div.innerHTML = `<p class="font-semibold">${i + 1}. ${ans.q}</p>
+                             <p class="${isCorrect ? 'text-green-700' : 'text-red-700'}">
+                             ${isCorrect ? 'Correct!' : 'Wrong. Correct answer: ' + questions[i].options[ans.correct]}</p>`;
+            report.appendChild(div);
+        });
+    }
+</script>
+</body>
+</html>
