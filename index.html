@@ -67,10 +67,16 @@
             </button>
             <div class="flex items-center justify-between gap-4">
                 <h2 id="page-title" class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Subject Library</h2>
-                <button id="quiz-header-btn" onclick="showQuizSubjects()" class="bg-indigo-50 text-indigo-700 px-4 py-2 rounded-full font-bold text-xs sm:text-sm hover:bg-indigo-100 transition-all border border-indigo-100 flex items-center gap-2">
-                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
-                    Quizzes
-                </button>
+                <div class="flex items-center gap-2">
+                    <button onclick="openPunishmentsPrompt()" class="bg-gradient-to-r from-rose-500 to-red-600 text-white px-4 py-2 rounded-full font-bold text-xs sm:text-sm hover:from-rose-600 hover:to-red-700 transition-all shadow-lg shadow-rose-200 flex items-center gap-2 active:scale-95">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                        Punishments
+                    </button>
+                    <button id="quiz-header-btn" onclick="showQuizSubjects()" class="bg-indigo-50 text-indigo-700 px-4 py-2 rounded-full font-bold text-xs sm:text-sm hover:bg-indigo-100 transition-all border border-indigo-100 flex items-center gap-2">
+                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                        Quizzes
+                    </button>
+                </div>
             </div>
             <p id="page-subtitle" class="text-slate-500 mt-2 text-sm sm:text-lg">Select a category to browse materials.</p>
         </header>
@@ -108,7 +114,7 @@
     </main>
 
     <div id="modal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-[60]">
-        <div class="bg-white rounded-[2rem] p-6 sm:p-8 w-full max-w-sm shadow-2xl relative">
+        <div class="bg-white rounded-[2rem] p-6 sm:p-8 w-full max-w-sm sm:max-w-md shadow-2xl relative">
             <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition">✕</button>
             <div id="modal-content"></div>
         </div>
@@ -140,27 +146,61 @@
             { title: "Python Day 06 Quiz", url: "https://adimidnightlearners.github.io/Midnight-Learners/PYTHON%20DAY%2006%20QUIZ.html", category: "Quiz-Python" }
         ];
 
-       function checkSessionTime() {
-    const now = new Date();
-    const istTime = new Date(
-        now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
-    );
+        // Punishments Database with individual pass keys for Sunitha, Pranavi, Hasini, Kanchana
+        const studentPunishments = {
+            "sunitha": {
+                name: "Sunitha",
+                passkey: "sunitha99",
+                punishments: [
+                    { subject: "Python", task: "Write a simple program to print 'Hello World' and add two numbers." },
+                    { subject: "English Communication", task: "Write 3 basic sentences about your daily routine." }
+                ]
+            },
+            "pranavi": {
+                name: "Pranavi",
+                passkey: "pranavi77",
+                punishments: [
+                    { subject: "Python", task: "Write a basic program using an if-else statement to check if a number is positive." },
+                    { subject: "English Communication", task: "Write 3 simple sentences introducing yourself." }
+                ]
+            },
+            "hasini": {
+                name: "Hasini",
+                passkey: "hasini33",
+                punishments: [
+                    { subject: "Python", task: "Create a simple list of 3 fruits and print each one using a loop." },
+                    { subject: "English Communication", task: "Write 3 simple sentences about your favorite hobby." }
+                ]
+            },
+            "kanchana": {
+                name: "Kanchana",
+                passkey: "kanchana55",
+                punishments: [
+                    { subject: "Python", task: "Write a simple function that takes a name and prints a greeting." },
+                    { subject: "English Communication", task: "Write 3 basic sentences about your favorite food." }
+                ]
+            }
+        };
 
-    const hours = istTime.getHours();
+        function checkSessionTime() {
+            const now = new Date();
+            const istTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Kolkata"}));
+            const hours = istTime.getHours();
+            const minutes = istTime.getMinutes();
+            
+            const meetLink = document.getElementById('meet-link');
+            
+            // Logic: Enabled from 9:20 PM (21:20) until 11:00 PM (23:00)
+            const isLive = (hours === 20 && minutes >= 00) || (hours === 22);
 
-    const meetLink = document.getElementById("meet-link");
-
-    // Enable from 8:00 PM (20:00) to 11:59 PM (23:59)
-    const isLive = hours >= 20 && hours <= 23;
-
-    if (isLive) {
-        meetLink.classList.remove("meet-disabled");
-        meetLink.classList.add("meet-enabled");
-    } else {
-        meetLink.classList.remove("meet-enabled");
-        meetLink.classList.add("meet-disabled");
-    }
-}
+            if (isLive) {
+                meetLink.classList.remove('meet-disabled');
+                meetLink.classList.add('meet-enabled');
+            } else {
+                meetLink.classList.remove('meet-enabled');
+                meetLink.classList.add('meet-disabled');
+            }
+        }
         setInterval(checkSessionTime, 60000);
         checkSessionTime();
 
@@ -239,9 +279,15 @@
         function checkAccess() {
             document.getElementById('modal').classList.remove('hidden');
             document.getElementById('modal-content').innerHTML = `
-                <h3 class="text-xl font-bold mb-6 text-slate-900">Access Restricted</h3>
-                <input id="passkey" type="password" placeholder="Enter security key" class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl mb-4 text-slate-900 outline-none focus:ring-2 focus:ring-indigo-100">
-                <button onclick="verifyKey()" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition active:scale-95">Verify</button>
+                <div class="text-center mb-6">
+                    <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner font-bold text-lg">🔒</div>
+                    <h3 class="text-xl font-extrabold text-slate-900">Access Restricted</h3>
+                    <p class="text-xs text-slate-500 mt-1">Enter security credentials to add materials.</p>
+                </div>
+                <div class="space-y-4">
+                    <input id="passkey" type="password" placeholder="Enter security key" class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl text-slate-900 text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-inner">
+                    <button onclick="verifyKey()" class="w-full bg-slate-900 text-white py-3.5 rounded-2xl font-bold hover:bg-slate-800 transition shadow-lg active:scale-95 text-sm">Verify Key</button>
+                </div>
             `;
         }
 
@@ -249,24 +295,107 @@
             if(document.getElementById('passkey').value === "adi105") {
                 showAddForm();
             } else {
-                document.getElementById('passkey').value = "";
-                document.getElementById('passkey').placeholder = "Invalid Key!";
+                const passInput = document.getElementById('passkey');
+                passInput.value = "";
+                passInput.placeholder = "Invalid Key! Try again";
+                passInput.classList.add('border-red-300', 'bg-red-50');
             }
+        }
+
+        // Redesigned Student Punishments Section with Sleek UI & Interactive Cards
+        function openPunishmentsPrompt() {
+            document.getElementById('modal').classList.remove('hidden');
+            document.getElementById('modal-content').innerHTML = `
+                <div class="text-center mb-6">
+                    <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner font-bold text-lg">⚡</div>
+                    <h3 class="text-xl font-extrabold text-slate-900">Student Punishments Portal</h3>
+                    <p class="text-xs text-slate-500 mt-1">Select your name and enter your assigned pass key to view tasks.</p>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Select Student</label>
+                        <select id="punish-student" class="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-sm font-medium text-slate-800 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all">
+                            <option value="sunitha">Sunitha</option>
+                            <option value="pranavi">Pranavi</option>
+                            <option value="hasini">Hasini</option>
+                            <option value="kanchana">Kanchana</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Pass Key</label>
+                        <input id="punish-passkey" type="password" placeholder="Enter your pass key" class="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all shadow-inner">
+                    </div>
+                    <button onclick="verifyStudentPunishments()" class="w-full bg-gradient-to-r from-rose-500 to-red-600 text-white py-3.5 rounded-2xl font-bold hover:from-rose-600 hover:to-red-700 transition shadow-lg shadow-rose-200 active:scale-95 text-sm">Access Punishments</button>
+                </div>
+            `;
+        }
+
+        function verifyStudentPunishments() {
+            const studentKey = document.getElementById('punish-student').value;
+            const enteredKey = document.getElementById('punish-passkey').value;
+            const studentData = studentPunishments[studentKey];
+
+            if (enteredKey === studentData.passkey) {
+                showStudentPunishmentsView(studentData);
+            } else {
+                const passInput = document.getElementById('punish-passkey');
+                passInput.value = "";
+                passInput.placeholder = "Incorrect Pass Key!";
+                passInput.classList.add('border-red-300', 'bg-red-50');
+            }
+        }
+
+        function showStudentPunishmentsView(data) {
+            document.getElementById('home-wrapper').classList.add('hidden');
+            document.getElementById('main-content').classList.add('hidden');
+            document.getElementById('breadcrumb').classList.remove('hidden');
+            document.getElementById('quiz-header-btn').classList.add('hidden');
+            closeModal();
+
+            document.getElementById('page-title').innerText = `${data.name}'s Punishments`;
+            document.getElementById('page-subtitle').innerText = "Assigned corrective tasks from English Communication and Python subjects.";
+
+            const grid = document.getElementById('resource-grid');
+            grid.innerHTML = data.punishments.map((p, index) => `
+                <div class="card bg-white p-6 sm:p-8 rounded-[2rem] border border-rose-100 shadow-xl shadow-rose-50/50 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-rose-50 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-rose-100 transition-all"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 text-rose-600 text-[10px] font-bold uppercase tracking-wider border border-rose-100">
+                                <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping"></span>
+                                Task 0${index + 1} • ${p.subject}
+                            </span>
+                            <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-100">⚠️ Pending</span>
+                        </div>
+                        <h3 class="font-black text-lg sm:text-xl text-slate-900 mb-3 tracking-tight">${p.subject} Assignment</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-100">${p.task}</p>
+                    </div>
+                    <div class="relative z-10 mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-slate-400">
+                        <span>Due: Next Session</span>
+                        <span class="text-rose-600 flex items-center gap-1">Complete & Submit →</span>
+                    </div>
+                </div>
+            `).join('');
         }
 
         function showAddForm() {
             document.getElementById('modal-content').innerHTML = `
-                <h3 class="text-xl font-bold mb-6 text-slate-900">Add Resource</h3>
-                <input id="title" type="text" placeholder="Title" class="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl mb-3 text-sm">
-                <input id="url" type="url" placeholder="URL" class="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl mb-3 text-sm">
-                <select id="category" class="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl mb-6 text-sm">
-                    <option value="Python">Python</option>
-                    <option value="DSA">DSA</option>
-                    <option value="Aptitude">Aptitude</option>
-                    <option value="Quiz-Python">Quiz-Python</option>
-                    <option value="Quiz-DSA">Quiz-DSA</option>
-                </select>
-                <button onclick="addResource()" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition">Save</button>
+                <div class="text-center mb-6">
+                    <h3 class="text-xl font-extrabold text-slate-900">Add Learning Resource</h3>
+                    <p class="text-xs text-slate-500 mt-1">Publish new study material or quiz link.</p>
+                </div>
+                <div class="space-y-3">
+                    <input id="title" type="text" placeholder="Resource Title (e.g. Day 7 - Python)" class="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 shadow-inner">
+                    <input id="url" type="url" placeholder="Resource URL or PDF Link" class="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 shadow-inner">
+                    <select id="category" class="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-medium text-slate-700 mb-2">
+                        <option value="Python">Python</option>
+                        <option value="DSA">DSA</option>
+                        <option value="Aptitude">Aptitude</option>
+                        <option value="Quiz-Python">Quiz-Python</option>
+                        <option value="Quiz-DSA">Quiz-DSA</option>
+                    </select>
+                    <button onclick="addResource()" class="w-full bg-emerald-600 text-white py-3.5 rounded-2xl font-bold hover:bg-emerald-700 transition shadow-lg shadow-emerald-200 active:scale-95 text-sm mt-2">Save & Publish</button>
+                </div>
             `;
         }
         
