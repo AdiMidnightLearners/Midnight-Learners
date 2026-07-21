@@ -114,8 +114,8 @@
     </main>
 
     <div id="modal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-[60]">
-        <div class="bg-white rounded-[2rem] p-6 sm:p-8 w-full max-w-sm sm:max-w-md shadow-2xl relative">
-            <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition">✕</button>
+        <div class="bg-white rounded-[2rem] p-5 sm:p-8 w-full max-w-xs sm:max-w-md shadow-2xl relative">
+            <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-900 transition">✕</button>
             <div id="modal-content"></div>
         </div>
     </div>
@@ -279,14 +279,14 @@
         function checkAccess() {
             document.getElementById('modal').classList.remove('hidden');
             document.getElementById('modal-content').innerHTML = `
-                <div class="text-center mb-6">
-                    <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner font-bold text-lg">🔒</div>
-                    <h3 class="text-xl font-extrabold text-slate-900">Access Restricted</h3>
-                    <p class="text-xs text-slate-500 mt-1">Enter security credentials to add materials.</p>
+                <div class="text-center mb-5">
+                    <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mx-auto mb-2.5 shadow-inner font-bold text-base">🔒</div>
+                    <h3 class="text-lg font-extrabold text-slate-900">Access Restricted</h3>
+                    <p class="text-[11px] text-slate-500 mt-0.5">Enter security credentials to add materials.</p>
                 </div>
-                <div class="space-y-4">
-                    <input id="passkey" type="password" placeholder="Enter security key" class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl text-slate-900 text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-inner">
-                    <button onclick="verifyKey()" class="w-full bg-slate-900 text-white py-3.5 rounded-2xl font-bold hover:bg-slate-800 transition shadow-lg active:scale-95 text-sm">Verify Key</button>
+                <div class="space-y-3">
+                    <input id="passkey" type="password" placeholder="Enter security key" class="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-slate-900 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-inner">
+                    <button onclick="verifyKey()" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-slate-800 transition shadow-lg active:scale-95 text-xs sm:text-sm">Verify Key</button>
                 </div>
             `;
         }
@@ -302,19 +302,19 @@
             }
         }
 
-        // Redesigned Student Punishments Section with Sleek UI & Interactive Cards
+        // Optimized & Minimal Mobile-Friendly Student Punishments Portal
         function openPunishmentsPrompt() {
             document.getElementById('modal').classList.remove('hidden');
             document.getElementById('modal-content').innerHTML = `
-                <div class="text-center mb-6">
-                    <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner font-bold text-lg">⚡</div>
-                    <h3 class="text-xl font-extrabold text-slate-900">Student Punishments Portal</h3>
-                    <p class="text-xs text-slate-500 mt-1">Select your name and enter your assigned pass key to view tasks.</p>
+                <div class="text-center mb-4 sm:mb-6">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-rose-50 text-rose-600 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-2.5 shadow-inner font-bold text-base sm:text-lg">⚡</div>
+                    <h3 class="text-lg sm:text-xl font-extrabold text-slate-900">Student Punishments</h3>
+                    <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">Select name & enter pass key to view tasks.</p>
                 </div>
-                <div class="space-y-4">
+                <div class="space-y-3 sm:space-y-4">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Select Student</label>
-                        <select id="punish-student" class="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-sm font-medium text-slate-800 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all">
+                        <label class="block text-[10px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Select Student</label>
+                        <select id="punish-student" class="w-full bg-slate-50 border border-slate-200 p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-medium text-slate-800 outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all">
                             <option value="sunitha">Sunitha</option>
                             <option value="pranavi">Pranavi</option>
                             <option value="hasini">Hasini</option>
@@ -322,10 +322,10 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Pass Key</label>
-                        <input id="punish-passkey" type="password" placeholder="Enter your pass key" class="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all shadow-inner">
+                        <label class="block text-[10px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Pass Key</label>
+                        <input id="punish-passkey" type="password" placeholder="Enter pass key" class="w-full bg-slate-50 border border-slate-200 p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all shadow-inner">
                     </div>
-                    <button onclick="verifyStudentPunishments()" class="w-full bg-gradient-to-r from-rose-500 to-red-600 text-white py-3.5 rounded-2xl font-bold hover:from-rose-600 hover:to-red-700 transition shadow-lg shadow-rose-200 active:scale-95 text-sm">Access Punishments</button>
+                    <button onclick="verifyStudentPunishments()" class="w-full bg-gradient-to-r from-rose-500 to-red-600 text-white py-3 rounded-xl sm:rounded-2xl font-bold hover:from-rose-600 hover:to-red-700 transition shadow-lg shadow-rose-200 active:scale-95 text-xs sm:text-sm">Access Punishments</button>
                 </div>
             `;
         }
@@ -345,6 +345,7 @@
             }
         }
 
+        // Clean & Compact Mobile View for Student Punishments List
         function showStudentPunishmentsView(data) {
             document.getElementById('home-wrapper').classList.add('hidden');
             document.getElementById('main-content').classList.add('hidden');
@@ -353,26 +354,24 @@
             closeModal();
 
             document.getElementById('page-title').innerText = `${data.name}'s Punishments`;
-            document.getElementById('page-subtitle').innerText = "Assigned corrective tasks from English Communication and Python subjects.";
+            document.getElementById('page-subtitle').innerText = "Assigned corrective tasks.";
 
             const grid = document.getElementById('resource-grid');
             grid.innerHTML = data.punishments.map((p, index) => `
-                <div class="card bg-white p-6 sm:p-8 rounded-[2rem] border border-rose-100 shadow-xl shadow-rose-50/50 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-rose-50 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-rose-100 transition-all"></div>
+                <div class="card bg-white p-3.5 sm:p-6 rounded-2xl sm:rounded-[2rem] border border-rose-100 shadow-md sm:shadow-xl shadow-rose-50/50 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-rose-50 rounded-full blur-xl sm:blur-2xl -mr-8 -mt-8"></div>
                     <div class="relative z-10">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 text-rose-600 text-[10px] font-bold uppercase tracking-wider border border-rose-100">
+                        <div class="flex items-center justify-between mb-2 sm:mb-4">
+                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-rose-50 text-rose-600 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider border border-rose-100">
                                 <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping"></span>
                                 Task 0${index + 1} • ${p.subject}
                             </span>
-                            //<span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-100">⚠️ Pending</span>
                         </div>
-                        <h3 class="font-black text-lg sm:text-xl text-slate-900 mb-3 tracking-tight">${p.subject} Assignment</h3>
-                        <p class="text-sm text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-100">${p.task}</p>
+                        <h3 class="font-bold text-sm sm:text-xl text-slate-900 mb-1.5 sm:mb-3 tracking-tight">${p.subject} Assignment</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed bg-slate-50 p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-100">${p.task}</p>
                     </div>
-                    <div class="relative z-10 mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-slate-400">
+                    <div class="relative z-10 mt-3 sm:mt-6 pt-2.5 sm:pt-4 border-t border-slate-100 flex items-center justify-between text-[10px] sm:text-xs font-bold text-slate-400">
                         <span>Due: Next Session</span>
-                        //<span class="text-rose-600 flex items-center gap-1">Complete & Submit →</span>
                     </div>
                 </div>
             `).join('');
@@ -380,21 +379,21 @@
 
         function showAddForm() {
             document.getElementById('modal-content').innerHTML = `
-                <div class="text-center mb-6">
-                    <h3 class="text-xl font-extrabold text-slate-900">Add Learning Resource</h3>
-                    <p class="text-xs text-slate-500 mt-1">Publish new study material or quiz link.</p>
+                <div class="text-center mb-5">
+                    <h3 class="text-lg sm:text-xl font-extrabold text-slate-900">Add Learning Resource</h3>
+                    <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">Publish new study material or quiz link.</p>
                 </div>
                 <div class="space-y-3">
-                    <input id="title" type="text" placeholder="Resource Title (e.g. Day 7 - Python)" class="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 shadow-inner">
-                    <input id="url" type="url" placeholder="Resource URL or PDF Link" class="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 shadow-inner">
-                    <select id="category" class="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-medium text-slate-700 mb-2">
+                    <input id="title" type="text" placeholder="Resource Title (e.g. Day 7 - Python)" class="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 shadow-inner">
+                    <input id="url" type="url" placeholder="Resource URL or PDF Link" class="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 shadow-inner">
+                    <select id="category" class="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-medium text-slate-700 mb-1">
                         <option value="Python">Python</option>
                         <option value="DSA">DSA</option>
                         <option value="Aptitude">Aptitude</option>
                         <option value="Quiz-Python">Quiz-Python</option>
                         <option value="Quiz-DSA">Quiz-DSA</option>
                     </select>
-                    <button onclick="addResource()" class="w-full bg-emerald-600 text-white py-3.5 rounded-2xl font-bold hover:bg-emerald-700 transition shadow-lg shadow-emerald-200 active:scale-95 text-sm mt-2">Save & Publish</button>
+                    <button onclick="addResource()" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition shadow-lg shadow-emerald-200 active:scale-95 text-xs sm:text-sm mt-1">Save & Publish</button>
                 </div>
             `;
         }
