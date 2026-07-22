@@ -186,24 +186,26 @@
         };
 
         function checkSessionTime() {
-            const now = new Date();
-            const istTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Kolkata"}));
-            const hours = istTime.getHours();
-            const minutes = istTime.getMinutes();
-            
-            const meetLink = document.getElementById('meet-link');
-            
-            // Logic: Enabled from 9:20 PM (21:20) until 11:00 PM (23:00)
-            const isLive = (hours === 20 && minutes >= 00) || (hours === 22);
+    const now = new Date();
+    const istTime = new Date(
+        now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+    );
 
-            if (isLive) {
-                meetLink.classList.remove('meet-disabled');
-                meetLink.classList.add('meet-enabled');
-            } else {
-                meetLink.classList.remove('meet-enabled');
-                meetLink.classList.add('meet-disabled');
-            }
-        }
+    const hours = istTime.getHours();
+
+    const meetLink = document.getElementById("meet-link");
+
+    // Enable from 8:00 PM (20:00) to 11:59 PM (23:59)
+    const isLive = hours >= 20 && hours <= 23;
+
+    if (isLive) {
+        meetLink.classList.remove("meet-disabled");
+        meetLink.classList.add("meet-enabled");
+    } else {
+        meetLink.classList.remove("meet-enabled");
+        meetLink.classList.add("meet-disabled");
+    }
+}
         setInterval(checkSessionTime, 60000);
         checkSessionTime();
 
